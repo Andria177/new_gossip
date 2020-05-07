@@ -1,0 +1,45 @@
+<main role="main">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Andria's Gossip New project</h1>
+      <% if logged_in? %>
+        <%= link_to "Créer un nouveau potin", new_gossip_path, :class => "btn btn-primary" %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="album">
+    <div class="container">
+      <p>Les rumeurs tout chaud à votre disposition:</p>
+      <div class="card-deck">
+        <% Gossip.all.sort.each_with_index do |potin, index|%>
+          <div class="col-3">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h3 class="card-title">Potin n° <%= potin.id %> de <%= link_to "#{potin.user.first_name}", user_path(potin.user.id) %></h3>
+                <h6 class="card-subtitle mb-2 text-muted"><%= potin.title %></h6>
+                <p class="card-text"><%= potin.content[0..50] %>...</p>
+                <p class="text-muted"><%= "#{potin.comments.length} post#{"s" unless potin.comments.length < 1}" %></p>
+                <p><%= "#{potin.likes.count} like#{"s" unless potin.likes.length < 2}" %></p>
+                <% if logged_in? %>
+                  <% unless check(potin.user) %>
+                    <% if user_liked?(potin) %>
+                      <%= form_tag gossip_likes_path(potin.id), method: :post do %>
+                        <%= submit_tag "Like", class: "btn btn-success"%>
+                      <% end %>
+                    <% else %>
+                      <%= form_tag gossip_like_path(potin.id, find_like(potin)), method: :delete do %>
+                        <%= submit_tag "Dislike", class: "btn btn-danger"%>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <%= link_to "Voir plus", gossip_path(potin.id), :class => "card-link" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>

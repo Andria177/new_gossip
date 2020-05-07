@@ -1,0 +1,35 @@
+<main class="container">
+  <h1><%= @current_city.name %></h1>
+  <p>Code postal : <%= @current_city.zip_code %></p>
+  <h2>Les Potins en fonction de chaque ville :</h2>
+  <div class="card-deck">
+    <% @current_city.users.each do |user|
+      user.gossips.each do |potin|%>
+      <div class="col-3">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title">Potin n° <%= potin.id %> de <%= link_to "#{potin.user.first_name}", user_path(potin.user.id) %></h3>
+            <h6 class="card-subtitle mb-2 text-muted"><%= potin.title %></h6>
+            <p class="card-text"><%= potin.content[0..50] %>...</p>
+            <% if logged_in? %>
+              <% unless check(potin.user) %>
+                <% if user_liked?(potin) %>
+                  <%= form_tag gossip_likes_path(potin.id), method: :post do %>
+                    <%= submit_tag "Like", class: "btn btn-success"%>
+                  <% end %>
+                <% else %>
+                  <%= form_tag gossip_like_path(potin.id, find_like(potin)), method: :delete do %>
+                    <%= submit_tag "Dislike", class: "btn btn-danger"%>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%= potin.likes.count  %>
+            <%=  link_to "Plus", gossip_path(potin.id), :class => "card-link" %>
+          </div>
+        </div>
+      </div>
+      <% end
+    end%>
+  </div>
+</main>

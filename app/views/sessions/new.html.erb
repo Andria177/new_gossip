@@ -1,0 +1,13 @@
+<main class="container">
+  <%=form_tag url_for(action: 'create'), method: 'post', class: "form-group" do %>
+
+    <label for="email">Email</label>
+    <%= text_field_tag 'email', "", class: "form-control" %>
+
+    <label for="password">Mot de passe</label>
+    <%= password_field_tag 'password', "", class: "form-control" %>
+
+    <%= submit_tag "Connexion", class: "btn btn-primary" %>
+
+  <% end %>
+</main>

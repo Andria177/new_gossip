@@ -1,0 +1,41 @@
+<main class="container">
+  <article class="">
+    <h1>Profil de <%= "#{@current_user.first_name} #{@current_user.last_name}" %></h1>
+    <p>Âge : <%= @current_user.age %> ans</p>
+    <p><%= @current_user.description %></p>
+    <p>Ville : <%= link_to "#{@current_user.city.name}", city_path(@current_user.city.id) %></p>
+    <a href="mailto:<%= @current_user.email %>?subject=message">Email-moi : <%= @current_user.email %></a>
+    <p>Membre depuis : <%= @current_user.created_at.asctime %></p>
+  </article>
+
+  <article class="">
+    <h2>Potins de l'utilisateur :</h2>
+    <div class="card-deck">
+      <% @current_user.gossips.each do |potin, index|%>
+        <div class="col-3">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">Potin n° <%= potin.id %> de <%= link_to "#{potin.user.first_name}", user_path(potin.user.id) %></h3>
+              <h6 class="card-subtitle mb-2 text-muted"><%= potin.title %></h6>
+              <p class="card-text"><%= potin.content[0..50] %>...</p>
+              <% if logged_in? %>
+                <% unless check(potin.user) %>
+                  <% if user_liked?(potin) %>
+                    <%= form_tag gossip_likes_path(potin.id), method: :post do %>
+                      <%= submit_tag "Like", class: "btn btn-success"%>
+                    <% end %>
+                  <% else %>
+                    <%= form_tag gossip_like_path(potin.id, find_like(potin)), method: :delete do %>
+                      <%= submit_tag "Dislike", class: "btn btn-danger"%>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <%=  link_to "Plus", gossip_path(potin.id), :class => "card-link" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </article>
+</main>

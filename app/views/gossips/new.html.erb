@@ -1,0 +1,15 @@
+<main class="container">
+<h1>Créez un nouveau rumeur</h1>
+<form class="form-group" action=<%= gossips_path %> method="POST">
+
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="title">Titre:</label>
+  <input class="form-control" type="text" name="title" id="title" placeholder="Votre titre...">
+
+  <label for="textarea">Contenu:</label>
+  <textarea name="content" class="form-control" id="textarea" rows="3" placeholder="Votre potin..."></textarea>
+
+  <input type="submit" value="Envoyer" class="btn btn-primary">
+</form>
+</main>
