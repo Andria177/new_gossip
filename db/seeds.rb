@@ -67,7 +67,7 @@ City.all.each do |city|
   end
 
   # Creation de 7 likes générés aléatoirement
-  20.times do
+  7.times do
     random_user = User.all.sample
     x = Faker::Number.between(1, 2)
     if x == 1
