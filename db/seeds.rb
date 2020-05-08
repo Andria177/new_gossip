@@ -9,7 +9,7 @@ require 'faker'
 
 # Creation de 7 villes
 7.times do
-  city_id = City.create(name: Faker::Address.city_id)
+  city = City.create(name: Faker::Nation.name)
 end
 
 # Creation de 7 tags
@@ -19,17 +19,17 @@ end
 
 recipient_number = 1
 # On crée une boucle pour "peupler" chaque ville
-City.all.each do |city_id|
+City.all.each do |city|
 
   # Creation de 7 utilisateurs
   7.times do
-    user = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, age: Faker::Number.between(18, 60), description: Faker::Lorem.sentences(2), city_id: city.id)
+    user = User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.safe_email, age: Faker::Number.between(18, 60), description: Faker::Lorem.sentences(2), city: city.id)
   end
 
   # Creation de 7 potins
   7.times do
     gossip = nil
-    randomuser = User.all.where(city_id: city.id).sample
+    randomuser = User.all.where(city: city.id).sample
       gossip = Gossip.create(title: Faker::Book.title, content: Faker::Lorem.sentences(2), date: Faker::Date.forward(7), user_id: randomuser.id)
 
       # Mise à jour des tag_id de tout les gossips
