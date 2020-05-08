@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :users, :cities
-  root 'gossips#index'
+
   get '/team', to: 'static_pages#team'
   get '/contact', to: 'static_pages#contact'
-
+  root 'gossips#index'
 end

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(first_name: params[:first_name], last_name: params[:last_name], email: params[:email], password: params[:password], age: params[:age], city_id: params[:city], description: params[:description])
+    @user = User.new(first_name: params[:first_name], last_name: params[:last_name], email: params[:email], password: params[:password], age: params[:age], city: params[:city_id], description: params[:description])
 
     if @user.save
       flash[:success] = "Vous êtes enregistré(e)!"

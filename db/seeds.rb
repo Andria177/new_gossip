@@ -9,7 +9,7 @@ require 'faker'
 
 # Creation de 7 villes
 7.times do
-  city = City.create(name: Faker::Address.city)
+  city_id = City.create(name: Faker::Address.city_id)
 end
 
 # Creation de 7 tags
@@ -19,7 +19,7 @@ end
 
 recipient_number = 1
 # On crée une boucle pour "peupler" chaque ville
-City.all.each do |city|
+City.all.each do |city_id|
 
   # Creation de 7 utilisateurs
   7.times do
