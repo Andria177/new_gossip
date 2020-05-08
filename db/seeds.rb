@@ -7,12 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
-# Creation de 10 villes
+# Creation de 7 villes
 7.times do
-  city = City.create(name: Faker::Address.city, postal_code: Faker::Address.zip_code)
+  city = City.create(name: Faker::Address.city)
 end
 
-# Creation de 10 tags
+# Creation de 7 tags
 7.times do
   tag = Tag.create(title: Faker::Job.field)
 end
